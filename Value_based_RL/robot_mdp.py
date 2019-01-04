@@ -1,15 +1,18 @@
+import random
+
+
 # 机器人找金币MDP过程
 class RobotMdp:
     def __init__(self):
         # 八种状态，以列表形式方便获取元素，字典形式只写出终止状态
-        self.states = [1,2,3,4,5,6,7,8]
+        self.states = [1, 2, 3, 4, 5, 6, 7, 8]
         self.terminal = dict()
         self.terminal[6] = 1
         self.terminal[7] = 1
         self.terminal[8] = 1
 
         # 动作集合
-        self.actions = ['e','s','w','n']
+        self.actions = ['e', 's', 'w', 'n']
 
         # R(s,a) 集合，为了方便终止状态在后面补充
         self.rewards = dict()
@@ -55,3 +58,32 @@ class RobotMdp:
             reward = self.rewards[key]
 
         return is_terminal, next_state, reward
+
+    def get_random_sample(self, num):
+        state_sample = []
+        action_sample = []
+        reward_sample = []
+
+        for i in range(num):
+            state_episode = []
+            action_episode = []
+            reward_episode = []
+
+            # 随机初始化状态（探索性初始化）
+            state = self.states[int(random.random() * len(self.states))]
+            is_terminal = False
+            while not is_terminal:
+                # 均匀策略
+                action = self.actions[int(random.random() * len(self.actions))]
+                is_terminal, next_state, reward = self.transform(state, action)
+                state_episode.append(state)
+                action_episode.append(action)
+                reward_episode.append(reward)
+                state = next_state
+
+            state_sample.append(state_episode)
+            action_sample.append(action_episode)
+            reward_sample.append(reward_episode)
+
+        return state_sample, action_sample, reward_sample
+

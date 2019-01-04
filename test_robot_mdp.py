@@ -17,13 +17,13 @@ def test():
             mdp = RobotMdp()
             s = i
             is_terminal = False
-            gama = 1.0
+            gamma = 1.0
             G = 0.0
             while not is_terminal:
                 action = random_pi()
                 is_terminal, s, reward = mdp.transform(s, action)
-                G += gama * reward
-                gama = gama * mdp.gama
+                G += gamma * reward
+                gamma = gamma * mdp.gamma
             # values[i] = (values[i] * (n-1) + G) / n
             values[i-1] = values[i-1] + G
 

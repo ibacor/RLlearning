@@ -19,13 +19,13 @@ class ValueIteration:
                 a = robot_mdp.actions[0]
                 is_terminal, next_state, reward = robot_mdp.transform(state, a)
                 # 由于使用greedy策略，q值也是新的值函数值
-                q = reward + robot_mdp.gama * self.values[next_state]
+                q = reward + robot_mdp.gamma * self.values[next_state]
 
                 for action in robot_mdp.actions:
                     is_terminal, next_state, reward = robot_mdp.transform(state, action)
-                    if q < reward + robot_mdp.gama * self.values[next_state]:
+                    if q < reward + robot_mdp.gamma * self.values[next_state]:
                         a = action
-                        q = reward + robot_mdp.gama * self.values[next_state]
+                        q = reward + robot_mdp.gamma * self.values[next_state]
 
                 delta += abs(self.values[state] - q)
                 self.values[state] = q

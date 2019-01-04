@@ -27,7 +27,7 @@ class PolicyIteration:
 
                 action = self.pi(state)
                 is_terminal, next_state, reward = robot_mdp.transform(state, action)
-                new_value = reward + robot_mdp.gama * self.values[next_state]
+                new_value = reward + robot_mdp.gamma * self.values[next_state]
                 delta += abs(new_value - self.values[state])
                 self.values[state] = new_value
 
@@ -41,12 +41,12 @@ class PolicyIteration:
 
             a = robot_mdp.actions[0]
             is_terminal, next_state, reward = robot_mdp.transform(state, a)
-            q = reward + robot_mdp.gama * self.values[next_state]
+            q = reward + robot_mdp.gamma * self.values[next_state]
             for action in robot_mdp.actions:
                 is_terminal, next_state, reward = robot_mdp.transform(state, action)
-                if q < reward + robot_mdp.gama * self.values[next_state]:
+                if q < reward + robot_mdp.gamma * self.values[next_state]:
                     a = action
-                    q = reward + robot_mdp.gama * self.values[next_state]
+                    q = reward + robot_mdp.gamma * self.values[next_state]
             self.greedy_pi[state] = a
 
     def cmp_pi(self, robot_mdp, pi1, pi2):
